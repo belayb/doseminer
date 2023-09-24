@@ -86,13 +86,13 @@ extract_from_prescription <- function(txt) {
     str_replace_all('times(?:/| a| per) ?', '/ ') %>%
     str_replace_all('(?<!take )([0-9]+) (?:times daily|a day)', '\\1 / day') %>%
     # Just "daily" = 1 / day (previous line must run first)
-    str_replace_all('daily|(?:every|each|at|in the) (?:day|morning|night|bedtime)',
+    str_replace_all('daily|(?:every|each|at|in|in the) (?:day|morning|night|bedtime|tea ?time|lunch ?time)',
                     '1 / day') %>%
     # Convert daily (and weekly) intervals.
     str_replace_all('(\\d+) times (?:(?:every |per )week|weekly)',
                     '\\1 / week')  %>%
     str_replace_all('(?:every|per) week|weekly', 'every 7 days') %>%
-    str_replace_all('(?:every )?(?:on )?alt(?:ernate)? (?:day|night|morning)s?|every (?:other|second) day',
+    str_replace_all('(?:every )?(?:on )?alt(?:ernate)? (?:day|night|morning|tea ?time|lunch ?time)s?|every (?:other|second) day',
                     'every 2 days') %>%
     str_replace_all('every third (?:day|night|morning)', 'every 3 days') %>%
     str_replace_all('[0-9]+ / week', weekly_to_daily) %>%
